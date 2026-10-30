@@ -283,8 +283,6 @@ def chat_completion(
 
         repeat_penalty=1.1,
 
-        chat_format="chatml",
-
         stream=False
 )
 
