@@ -291,6 +291,15 @@ def chat_completion(
     if not choices:
         raise RuntimeError("Qwen3 returned an empty response.")
 
+    content = (
+        choices[0]
+        .get("message", {})
+        .get("content", "")
+    )
+
+    if not isinstance(content, str):
+        raise RuntimeError("Qwen3 returned an invalid response.")
+
     import re
 
     content = re.sub(
@@ -300,11 +309,11 @@ def chat_completion(
         flags=re.DOTALL | re.IGNORECASE
     ).strip()
 
-    if not isinstance(content, str) or not content.strip():
+    if not content:
         raise RuntimeError("Qwen3 generated an empty response.")
 
     return {
-        "content": content.strip(),
+        "content": content,
         "model": MODEL_REPO,
         "usage": response.get("usage", {}),
         "finish_reason": choices[0].get("finish_reason")
