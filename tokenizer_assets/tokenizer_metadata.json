@@ -1,0 +1,17 @@
+{
+    "sample_entries": 5000,
+    "vocabulary_size": 8000,
+    "target_vocabulary_size": 8000,
+    "tokenizer_training_time_seconds": 186.42,
+    "mean_characters_per_entry": 445.038,
+    "mean_words_per_entry": 84.2022,
+    "mean_tokens_per_entry": 112.0942,
+    "tokens_per_word": 1.3312502523687029,
+    "characters_per_token": 3.970214337583925,
+    "special_token_ids": {
+        "[PAD]": 0,
+        "[UNK]": 1,
+        "[BOS]": 2,
+        "[EOS]": 3
+    }
+}
