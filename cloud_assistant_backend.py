@@ -273,29 +273,34 @@ def chat_completion(
     with MODEL_LOCK:
 
         response = llm.create_chat_completion(
-            messages=prepared,
+        messages=prepared,
 
-            temperature=temperature,
-            top_p=top_p,
-            top_k=20,
+        temperature=temperature,
+        top_p=top_p,
+        top_k=20,
 
-            max_tokens=max_tokens,
+        max_tokens=max_tokens,
 
-            repeat_penalty=1.1,
+        repeat_penalty=1.1,
 
-            stream=False
-        )
+        chat_format="chatml",
+
+        stream=False
+)
 
     choices = response.get("choices", [])
 
     if not choices:
         raise RuntimeError("Qwen3 returned an empty response.")
 
-    content = (
-        choices[0]
-        .get("message", {})
-        .get("content", "")
-    )
+    import re
+
+    content = re.sub(
+        r"<think>.*?</think>",
+        "",
+        content,
+        flags=re.DOTALL | re.IGNORECASE
+    ).strip()
 
     if not isinstance(content, str) or not content.strip():
         raise RuntimeError("Qwen3 generated an empty response.")
